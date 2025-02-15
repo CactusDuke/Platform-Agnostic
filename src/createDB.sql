@@ -35,7 +35,9 @@ GRANT USAGE, SELECT, UPDATE ON SEQUENCE cur_table_v_id_seq TO python;
 
 GRANT ALL PRIVILEGES ON old_tables TO python;
 GRANT SELECT, UPDATE, INSERT, DELETE ON old_tables to python;
+GRANT USAGE, SELECT, UPDATE ON SEQUENCE old_tables_c_id_seq TO python;
 
 GRANT ALL PRIVILEGES ON history TO python;
 GRANT SELECT, UPDATE, INSERT, DELETE ON history to python;
+GRANT USAGE, SELECT, UPDATE ON SEQUENCE history_h_id_seq TO python;
 

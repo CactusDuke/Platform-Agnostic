@@ -14,7 +14,7 @@ cursor = conn.cursor()
 
 cursor.execute("TRUNCATE TABLE cur_table;")
 
-v_date = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+v_date = str(datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
 print(v_date)
 v_long = 0.0
 v_lat = 0.0
@@ -27,7 +27,5 @@ cursor.execute(f"SELECT * FROM cur_table;")
 print(cursor.fetchall())
 
 
-
-
-
-
+conn.commit()
+conn.close()
