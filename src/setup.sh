@@ -2,11 +2,15 @@
 sudo apt-get install postgresql -y
 sudo service postgresql start
 
-#Setting up Postgres
-sudo -u postgres psql < src/createDB.sql;
-
-#Setting up
+#Setting up Python
 rm -r venv
 python -m venv venv
 source venv/bin/activate
+
+#Libraries
+pip install psycopg2-binary
+
+#Setting up Postgres
+sudo -u postgres psql < src/createDB.sql;
+
 
