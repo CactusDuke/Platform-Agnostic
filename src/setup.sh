@@ -16,4 +16,4 @@ pip install geopy
 sudo -u postgres psql < src/createDB.sql;
 
 #Starting Server
-python src/Server/server.py
+python Server/server.py
