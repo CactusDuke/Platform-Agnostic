@@ -28,6 +28,8 @@ location = "Edmonton" #Set Location
 def gbutton_callback(channel):
     if smallDistance == 0.0: #Setting up values
         smallDistance = distance() + (0.2 * fullDistance) #Gives Error, Needs better way
+        mylcd.lcd_clear()
+        mylcd.lcd_display_string("Ready to Vote", 1)
 
     elif readyForVote == True:
         curDistance = distance()
@@ -38,6 +40,13 @@ def gbutton_callback(channel):
             #Display
             mylcd.lcd_clear()
             mylcd.lcd_display_string("Voted: True", 1)
+
+            time.sleep(2)
+
+            mylcd.lcd_clear()
+            mylcd.lcd_display_string("Ready to Vote", 1)
+
+
         else:
             mylcd.lcd_clear()
             mylcd.lcd_display_string("Voted Inconsistency", 1)
@@ -58,6 +67,13 @@ def rbutton_callback(channel):
 
             mylcd.lcd_clear()
             mylcd.lcd_display_string("Voted: False", 1)
+
+            time.sleep(2)
+
+            mylcd.lcd_clear()
+            mylcd.lcd_display_string("Ready to Vote", 1)
+
+            
         else:
             mylcd.lcd_clear()
             mylcd.lcd_display_string("Voted Inconsistency", 1)
@@ -103,7 +119,7 @@ def main():
 
 
     readyForVote = True
-    
+
     #Button Logic
     GPIO.setwarnings(False) # Ignore warning for now
     GPIO.setmode(GPIO.BCM) # Use physical pin numbering
