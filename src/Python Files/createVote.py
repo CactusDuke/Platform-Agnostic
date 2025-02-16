@@ -16,9 +16,9 @@ def createVote(voteName="Temp"):
     cursor.execute("TRUNCATE TABLE cur_table;")
 
     v_date = str(datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
-    v_long = 0.0
-    v_lat = 0.0
-    v_vote = 0
+    v_long = -1.0
+    v_lat = -1.0
+    v_vote = -1
     v_table = voteName
 
     cursor.execute(f"INSERT INTO cur_table (v_date, v_long, v_lat, v_vote, v_table) VALUES ('{v_date}', {v_long}, {v_lat}, {v_vote}, '{v_table}')")
@@ -26,3 +26,6 @@ def createVote(voteName="Temp"):
 
     conn.commit()
     conn.close()
+
+if __name__ == "__main__":
+    createVote("TEST2")

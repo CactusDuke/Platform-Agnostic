@@ -29,5 +29,7 @@ def archiveVote():
     conn.commit()
     conn.close()
 
+if __name__ == "__main__":
+    archiveVote()
 
 

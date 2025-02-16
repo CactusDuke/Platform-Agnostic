@@ -17,10 +17,10 @@ def addVote(vote=0, lat=0.0, long=0.0):
     v_table = value[0][5]
 
     #Checks if the starting vote is there
-    if len(value) == 1:
+    if value[0][4] == -1:
         #Deletes it if it is
         cursor.execute("TRUNCATE TABLE cur_table;")
-        cursor.commit
+        conn.commit
 
 
     v_date = str(datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
@@ -32,3 +32,12 @@ def addVote(vote=0, lat=0.0, long=0.0):
 
     conn.commit()
     conn.close()
+if __name__ == "__main__":
+    addVote(1, 4, 3)
+    addVote(1, 4, 3)
+    addVote(0, 4, 3)
+    addVote(1, 4, 3)
+    addVote(0, 4, 3)
+    addVote(1, 4, 3)
+    addVote(0, 4, 3)
+    addVote(0, 4, 3)

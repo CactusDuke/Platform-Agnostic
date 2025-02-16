@@ -4,6 +4,7 @@ GRANT ALL PRIVILEGES ON DATABASE popvote TO python;
 
 \connect popvote
 
+DROP TABLE IF EXISTS cur_table;
 CREATE TABLE IF NOT EXISTS cur_table (
     v_id SERIAL PRIMARY KEY,
     v_date TIMESTAMP NOT NULL,
@@ -13,6 +14,7 @@ CREATE TABLE IF NOT EXISTS cur_table (
     v_table VARCHAR(40)
 );
 
+DROP TABLE IF EXISTS old_tables;
 CREATE TABLE IF NOT EXISTS old_tables (
     c_id SERIAL PRIMARY KEY,
     v_id INT,
@@ -23,6 +25,7 @@ CREATE TABLE IF NOT EXISTS old_tables (
     v_table VARCHAR(40)
 );
 
+DROP TABLE IF EXISTS history;
 CREATE TABLE IF NOT EXISTS history (
     h_id SERIAL PRIMARY KEY,
     h_date DATE NOT NULL,
