@@ -9,6 +9,7 @@ source venv/bin/activate
 
 #Libraries
 pip install psycopg2-binary
+pip install flask
 
 #Setting up Postgres
 sudo -u postgres psql < src/createDB.sql;

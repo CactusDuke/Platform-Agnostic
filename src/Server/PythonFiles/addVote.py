@@ -41,3 +41,5 @@ if __name__ == "__main__":
     addVote(1, 4, 3)
     addVote(0, 4, 3)
     addVote(0, 4, 3)
+    addVote(0, 4, 3)
+    addVote(0, 4, 3)

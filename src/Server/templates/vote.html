@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Voting Page</title>
+  <style>
+    body {
+      background: #e0f7fa;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .container {
+      background: white;
+      padding: 30px 50px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+    h2 {
+      margin-bottom: 20px;
+    }
+    .option {
+      display: block;
+      margin: 15px 0;
+      font-size: 18px;
+    }
+    .button {
+      background-color: #007BFF;
+      color: white;
+      padding: 10px 20px;
+      margin-top: 20px;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    .button:hover {
+      background-color: #0069d9;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Vote for Your Option</h2>
+    <form action="/voted" method="post">
+      <label class="option">
+        <input type="radio" name="vote" value="1" required> TRUE
+      </label>
+      <label class="option">
+        <input type="radio" name="vote" value="0" required> FALSE
+      </label>
+      <label for="string">Location:</label>
+      <input type="string" step="any" name="location" id="location" required>
+      <br><br>
+      <button type="submit" class="button">Submit Vote</button>
+    </form>
+  </div>
+</body>
+</html>

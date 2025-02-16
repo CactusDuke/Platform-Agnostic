@@ -13,11 +13,8 @@ def votePercent():
 
     cursor.execute(f"SELECT COUNT(v_id), COALESCE(SUM(v_vote), 0) FROM cur_table;")
     vals = cursor.fetchone()
-    print(vals)
-    print(f"{vals[1]/vals[0] * 100}% Yes")
 
-    return(vals[1]/vals[0])
-
+    return(round(vals[1] / vals[0], 2))
 
 if __name__ == "__main__":
     x = votePercent()
