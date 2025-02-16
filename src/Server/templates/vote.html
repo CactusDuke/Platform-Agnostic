@@ -48,7 +48,7 @@
 <body>
   <div class="container">
     <h2>Vote for Your Option</h2>
-    <form action="/voted" method="post">
+    <form action="/vote" method="post">
       <label class="option">
         <input type="radio" name="vote" value="1" required> TRUE
       </label>
@@ -56,7 +56,7 @@
         <input type="radio" name="vote" value="0" required> FALSE
       </label>
       <label for="string">Location:</label>
-      <input type="string" step="any" name="location" id="location" required>
+      <input type="string" step="any" name="location" id="location" value="Edmonton">
       <br><br>
       <button type="submit" class="button">Submit Vote</button>
     </form>

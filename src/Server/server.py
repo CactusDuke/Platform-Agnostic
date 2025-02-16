@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, redirect, url_for
 from PythonFiles.returnVote import votePercent
 from PythonFiles.findLocation import getLocation
 from PythonFiles.addVote import addVote
@@ -14,10 +14,11 @@ def index():
 @app.route('/score')
 def score():
     try:
-        result = votePercent()
+        result, name, trueV, falseV = votePercent()
         result = result * 100
+        print(trueV)
         # Render the result in a separate HTML file using a template variable
-        return render_template('result.html', result=result)
+        return render_template('result.html', result=result, tableName=name, trueV=trueV, falseV=falseV)
     except Exception as e:
         return f"<h2>Error: {str(e)}</h2>", 400
 
@@ -26,7 +27,7 @@ def vote():
     # Retrieve the vote value from the form submission.
     return render_template('vote.html')
 
-@app.route('/voted', methods=['POST'])
+@app.route('/vote', methods=['POST'])
 def voted():
     #Collecting Values
     vote_value = int(request.form.get('vote'))
@@ -38,7 +39,8 @@ def voted():
         return f"<h2>Error: Vote Failure</h2>", 400
 
     # This renders a simple page thanking the user.
-    return render_template('voted.html')
+    return redirect(url_for('index'))
+    #return render_template('voted.html')
 
 @app.route('/create')
 def create():
@@ -49,9 +51,12 @@ def create():
 def created():
     #Collecting Values
     name = request.form.get('name')
+
+    try:
+        createVote(name) #Creates vote with name
+    except Exception as e:
+        return f"<h2>Error: Vote Creation Failure</h2>", 400
     
-    createVote(name) #Creates vote with name
-    # This renders a simple page thanking the user.
     return render_template('voted.html')
 
 if __name__ == '__main__':
