@@ -99,9 +99,11 @@ def main():
     #Init distance values
     fullDistance = distance()
     mylcd.lcd_clear()
-    mylcd.lcd_display_string("Press Green", 1)
+    mylcd.lcd_display_string("Initilizing", 1)
 
 
+    readyForVote = True
+    
     #Button Logic
     GPIO.setwarnings(False) # Ignore warning for now
     GPIO.setmode(GPIO.BCM) # Use physical pin numbering
@@ -110,8 +112,6 @@ def main():
 
     GPIO.add_event_detect(17,GPIO.FALLING,callback=gbutton_callback)# Setup event on pin 10 rising edge
     GPIO.add_event_detect(27,GPIO.FALLING,callback=rbutton_callback)
-
-    readyForVote = True
 
     message = input("Press enter to quit\n\n") # Run until someone presses enter
     GPIO.cleanup() # Clean up
