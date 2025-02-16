@@ -2,6 +2,7 @@ from flask import Flask, request, render_template
 from PythonFiles.returnVote import votePercent
 from PythonFiles.findLocation import getLocation
 from PythonFiles.addVote import addVote
+from PythonFiles.createVote import createVote
 
 app = Flask(__name__)
 
@@ -30,9 +31,26 @@ def voted():
     #Collecting Values
     vote_value = int(request.form.get('vote'))
     location = request.form.get('location')
-    lat, lon = getLocation(location)
+    try:
+        lat, lon = getLocation(location)
+        addVote(vote_value, lat, lon) #Adds to database
+    except Exception as e:
+        return f"<h2>Error: Vote Failure</h2>", 400
+
+    # This renders a simple page thanking the user.
+    return render_template('voted.html')
+
+@app.route('/create')
+def create():
+    # Retrieve the vote value from the form submission.
+    return render_template('create.html')
+
+@app.route('/created', methods=['POST'])
+def created():
+    #Collecting Values
+    name = request.form.get('name')
     
-    addVote(vote_value, lat, lon) #Adds to database
+    createVote(name) #Creates vote with name
     # This renders a simple page thanking the user.
     return render_template('voted.html')
 
