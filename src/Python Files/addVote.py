@@ -1,9 +1,8 @@
-#Script to create new vote Table
-#Will wipe current table
+#Script to add new vote 
 import psycopg2
 from datetime import datetime
 
-def createVote(voteName="Temp"):
+def addVote(vote=0, lat=0.0, long=0.0):
     conn = psycopg2.connect(database="popvote",
                             host="LOCALHOST",
                             user="python",
@@ -13,16 +12,23 @@ def createVote(voteName="Temp"):
 
     cursor = conn.cursor()
 
-    cursor.execute("TRUNCATE TABLE cur_table;")
+    cursor.execute(f"SELECT * FROM cur_table;")
+    value = cursor.fetchall()
+    v_table = value[0][5]
+
+    #Checks if the starting vote is there
+    if len(value) == 1:
+        #Deletes it if it is
+        cursor.execute("TRUNCATE TABLE cur_table;")
+        cursor.commit
+
 
     v_date = str(datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
-    v_long = 0.0
-    v_lat = 0.0
-    v_vote = 0
-    v_table = voteName
+    v_long = long
+    v_lat = lat
+    v_vote = vote
 
     cursor.execute(f"INSERT INTO cur_table (v_date, v_long, v_lat, v_vote, v_table) VALUES ('{v_date}', {v_long}, {v_lat}, {v_vote}, '{v_table}')")
-    cursor.execute(f"SELECT * FROM cur_table;")
 
     conn.commit()
     conn.close()
