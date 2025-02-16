@@ -31,7 +31,7 @@ def gbutton_callback(channel):
 
     elif readyForVote == True:
         curDistance = distance()
-        if curDistance <= smallDistance: #If there is no hole: True Vote
+        if curDistance >= smallDistance: #If there is no hole: True Vote
             lat_PI, long_PI = getLocation(location) #Get lat and long of location
             addVote(1, lat_PI, long_PI) #Adds Vote
 
@@ -52,7 +52,7 @@ def gbutton_callback(channel):
 def rbutton_callback(channel):
     if readyForVote == True:
         curDistance = distance()
-        if curDistance >= smallDistance: #If there is no hole: True Vote
+        if curDistance <= smallDistance: #If there is no hole: True Vote
             lat_PI, long_PI = getLocation(location) #Get lat and long of location
             addVote(0, lat_PI, long_PI) #Adds the vote to database
 
