@@ -73,7 +73,7 @@ def rbutton_callback(channel):
             mylcd.lcd_clear()
             mylcd.lcd_display_string("Ready to Vote", 1)
 
-            
+
         else:
             mylcd.lcd_clear()
             mylcd.lcd_display_string("Voted Inconsistency", 1)
