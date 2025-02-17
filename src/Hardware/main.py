@@ -24,7 +24,7 @@ mylcd = I2C_LCD_driver.lcd()
 readyForVote = False
 fullDistance = 0.0
 smallDistance = 0.0
-location = "Edmonton" #Set Location
+location = "Edmonton" #Set Location ahh
 
 #Green for true
 def gbutton_callback(channel):
