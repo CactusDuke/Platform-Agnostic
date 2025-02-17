@@ -23,13 +23,14 @@ mylcd = I2C_LCD_driver.lcd()
 #Global Variables
 readyForVote = False
 fullDistance = 0.0
-smallDistance = 0.0
+global smallDistance = 0.0
 location = "Edmonton" #Set Location
 
 #Green for true
 def gbutton_callback(channel):
     if smallDistance == 0.0: #Setting up values
         smallDistance = distance() + (0.2 * fullDistance) #Gives Error, Needs better way
+
         mylcd.lcd_clear()
         mylcd.lcd_display_string("Ready to Vote", 1)
 
