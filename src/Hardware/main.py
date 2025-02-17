@@ -23,7 +23,7 @@ mylcd = I2C_LCD_driver.lcd()
 #Global Variables
 readyForVote = False
 fullDistance = 0.0
-smallDistance = 3.0
+smallDistance = 5.0
 location = "Edmonton" #Set Location ahh
 
 
@@ -82,7 +82,7 @@ def rbutton_callback(channel):
 
         else:
             mylcd.lcd_clear()
-            mylcd.lcd_display_string("Voted Inconsistency", 1)
+            mylcd.lcd_display_string("Vote Inconsist", 1)
 
     else:
         mylcd.lcd_clear()
