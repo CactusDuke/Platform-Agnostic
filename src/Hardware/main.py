@@ -23,13 +23,8 @@ mylcd = I2C_LCD_driver.lcd()
 #Global Variables
 readyForVote = False
 fullDistance = 0.0
-<<<<<<< HEAD
 smallDistance = 5.0
 location = "Edmonton" #Set Location ahh
-=======
-smallDistance = 0.0
-location = "Edmonton" #Set Location
->>>>>>> refs/remotes/origin/main
 
 
 #Green for true
@@ -148,7 +143,6 @@ def main():
 
 if __name__ == '__main__':
     main()
-
 
 
 
