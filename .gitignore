@@ -1,2 +1,2 @@
 /venv
-src/Server/PythonFiles/__pycache__/
+*__pycache__/
