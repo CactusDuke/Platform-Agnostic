@@ -4,7 +4,7 @@ import RPi.GPIO as GPIO
 #import Server.PythonFiles.addVote
 #import Server.PythonFiles.findLocation
 from addVote import addVote
-from findLocation.py import getLocation
+from findLocation import getLocation
 
 #Setup for ultrasonic
 #GPIO Mode (BOARD / BCM)
