@@ -1,148 +1,116 @@
 import I2C_LCD_driver
 import time
-import RPi.GPIO as GPIO 
-#import Server.PythonFiles.addVote
-#import Server.PythonFiles.findLocation
+import RPi.GPIO as GPIO
 from addVote import addVote
 from findLocation import getLocation
 
-#Setup for ultrasonic
-#GPIO Mode (BOARD / BCM)
+# Setup for ultrasonic
 GPIO.setmode(GPIO.BCM)
- 
-#set GPIO Pins
+
+# Set GPIO Pins
 GPIO_TRIGGER = 16
 GPIO_ECHO = 20
- 
-#set GPIO direction (IN / OUT)
+
+# Set GPIO direction (IN / OUT)
 GPIO.setup(GPIO_TRIGGER, GPIO.OUT)
 GPIO.setup(GPIO_ECHO, GPIO.IN)
 
+# Set up LCD display
 mylcd = I2C_LCD_driver.lcd()
 
-#Global Variables
+# Global Variables
 readyForVote = False
 fullDistance = 0.0
-smallDistance = 0.0
-location = "Edmonton" #Set Location
+smallDistance = 30.0  # Set a fixed distance threshold for voting (e.g., 30 cm)
+location = "Edmonton"  # Set Location
 
-#Green for true
+# Green button callback for True vote
 def gbutton_callback(channel):
     global smallDistance
-    if smallDistance == 0.0: #Setting up values
-        smallDistance = distance() + (0.2 * fullDistance) #Gives Error, Needs better way
-
+    if smallDistance == 0.0:  # Initial setup
+        fullDistance = distance()  # Get the first reading
         mylcd.lcd_clear()
         mylcd.lcd_display_string("Ready to Vote", 1)
-
-    elif readyForVote == True:
+    elif readyForVote:
         curDistance = distance()
-        if curDistance >= smallDistance: #If there is no hole: True Vote
-            lat_PI, long_PI = getLocation(location) #Get lat and long of location
-            addVote(1, lat_PI, long_PI) #Adds Vote
-
-            #Display
+        if curDistance >= smallDistance:  # If distance exceeds threshold, vote True
+            lat_PI, long_PI = getLocation(location)  # Get location
+            addVote(1, lat_PI, long_PI)  # Add vote as True
             mylcd.lcd_clear()
             mylcd.lcd_display_string("Voted: True", 1)
-
             time.sleep(2)
-
             mylcd.lcd_clear()
             mylcd.lcd_display_string("Ready to Vote", 1)
-
-
         else:
             mylcd.lcd_clear()
             mylcd.lcd_display_string("Voted Inconsistency", 1)
-
     else:
         mylcd.lcd_clear()
         mylcd.lcd_display_string("Please Wait", 1)
 
-
-
-#Red for false
+# Red button callback for False vote
 def rbutton_callback(channel):
-    global smallDistance
-    if readyForVote == True:
+    if readyForVote:
         curDistance = distance()
-        if curDistance <= smallDistance: #If there is no hole: True Vote
-            lat_PI, long_PI = getLocation(location) #Get lat and long of location
-            addVote(0, lat_PI, long_PI) #Adds the vote to database
-
+        if curDistance <= smallDistance:  # If distance is below threshold, vote False
+            lat_PI, long_PI = getLocation(location)  # Get location
+            addVote(0, lat_PI, long_PI)  # Add vote as False
             mylcd.lcd_clear()
             mylcd.lcd_display_string("Voted: False", 1)
-
             time.sleep(2)
-
             mylcd.lcd_clear()
             mylcd.lcd_display_string("Ready to Vote", 1)
-
-
         else:
             mylcd.lcd_clear()
             mylcd.lcd_display_string("Voted Inconsistency", 1)
-
     else:
         mylcd.lcd_clear()
         mylcd.lcd_display_string("Please Wait", 1)
 
-
-
+# Calculate distance from the ultrasonic sensor
 def distance():
-    # set Trigger to HIGH
     GPIO.output(GPIO_TRIGGER, True)
- 
-    # set Trigger after 0.01ms to LOW
     time.sleep(0.00001)
     GPIO.output(GPIO_TRIGGER, False)
- 
+
     StartTime = time.time()
     StopTime = time.time()
- 
-    # save StartTime
+
     while GPIO.input(GPIO_ECHO) == 0:
         StartTime = time.time()
- 
-    # save time of arrival
+
     while GPIO.input(GPIO_ECHO) == 1:
         StopTime = time.time()
- 
-    # time difference between start and arrival
+
     TimeElapsed = StopTime - StartTime
-    # multiply with the sonic speed (34300 cm/s)
-    # and divide by 2, because there and back
-    distance = (TimeElapsed * 34300) / 2
- 
-    return distance
+    dist = (TimeElapsed * 34300) / 2
+    return dist
 
+# Main function to initialize and start the voting process
 def main():
-    #Init distance values
     global readyForVote
-    global fullDistance
 
-
-    fullDistance = distance()
     mylcd.lcd_clear()
-    mylcd.lcd_display_string("Initilizing", 1)
+    mylcd.lcd_display_string("Initializing", 1)
+    time.sleep(2)
 
     readyForVote = True
 
-    #Button Logic
-    GPIO.setwarnings(False) # Ignore warning for now
-    GPIO.setmode(GPIO.BCM) # Use physical pin numbering
-    GPIO.setup(17, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)# Set pin 10 to be an input pin and set initial value to be pulled low (off)
-    GPIO.setup(27, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+    # Setup GPIO for button presses
+    GPIO.setwarnings(False)
+    GPIO.setmode(GPIO.BCM)
+    GPIO.setup(17, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)  # Green button (True vote)
+    GPIO.setup(27, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)  # Red button (False vote)
 
-    GPIO.add_event_detect(17,GPIO.FALLING,callback=gbutton_callback)# Setup event on pin 10 rising edge
-    GPIO.add_event_detect(27,GPIO.FALLING,callback=rbutton_callback)
+    # Add event detection for button presses with debouncing
+    GPIO.add_event_detect(17, GPIO.FALLING, callback=gbutton_callback, bouncetime=300)  # 300ms debounce
+    GPIO.add_event_detect(27, GPIO.FALLING, callback=rbutton_callback, bouncetime=300)  # 300ms debounce
 
-    message = input("Press enter to quit\n\n") # Run until someone presses enter
-    GPIO.cleanup() # Clean up
+    mylcd.lcd_clear()
+    mylcd.lcd_display_string("Press button to vote", 1)
+
+    message = input("Press Enter to quit\n\n")  # Run until someone presses enter
+    GPIO.cleanup()  # Clean up GPIO
 
 if __name__ == '__main__':
     main()
-
-
-
-
