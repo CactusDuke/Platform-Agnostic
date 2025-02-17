@@ -3,8 +3,8 @@ import time
 import RPi.GPIO as GPIO 
 #import Server.PythonFiles.addVote
 #import Server.PythonFiles.findLocation
-import addVote
-import findLocation
+from addVote import addVote
+from findLocation.py import getLocation
 
 #Setup for ultrasonic
 #GPIO Mode (BOARD / BCM)
@@ -121,7 +121,7 @@ def main():
     global readyForVote
     global fullDistance
 
-    
+
     fullDistance = distance()
     mylcd.lcd_clear()
     mylcd.lcd_display_string("Initilizing", 1)
