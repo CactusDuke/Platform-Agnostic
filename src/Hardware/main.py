@@ -29,9 +29,6 @@ location = "Edmonton" #Set Location
 #Green for true
 def gbutton_callback(channel):
     global smallDistance
-    global readyForVote
-    global fullDistance
-    global location
     if smallDistance == 0.0: #Setting up values
         smallDistance = distance() + (0.2 * fullDistance) #Gives Error, Needs better way
 
@@ -67,9 +64,6 @@ def gbutton_callback(channel):
 #Red for false
 def rbutton_callback(channel):
     global smallDistance
-    global readyForVote
-    global fullDistance
-    global location
     if readyForVote == True:
         curDistance = distance()
         if curDistance <= smallDistance: #If there is no hole: True Vote
@@ -124,15 +118,14 @@ def distance():
 
 def main():
     #Init distance values
+    global readyForVote
+    global fullDistance
+
+    
     fullDistance = distance()
     mylcd.lcd_clear()
     mylcd.lcd_display_string("Initilizing", 1)
-    
-    global smallDistance
-    global readyForVote
-    global fullDistance
-    global location
-    
+
     readyForVote = True
 
     #Button Logic
