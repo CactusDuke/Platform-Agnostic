@@ -1,5 +1,5 @@
 import I2C_LCD_driver
-from time import *
+import time
 import RPi.GPIO as GPIO 
 #import Server.PythonFiles.addVote
 #import Server.PythonFiles.findLocation

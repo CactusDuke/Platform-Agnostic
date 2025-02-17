@@ -12,7 +12,7 @@ pip install psycopg2-binary
 pip install flask
 pip install geopy
 pip install smbus
-pip install RPi.GPIO
+pip install rpi-lgpio
 
 #Setting up Postgres
 sudo -u postgres psql < src/createDB.sql;
