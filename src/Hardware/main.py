@@ -3,8 +3,8 @@ from time import *
 import RPi.GPIO as GPIO 
 #import Server.PythonFiles.addVote
 #import Server.PythonFiles.findLocation
-import Server.PythonFiles.addVote
-import Server.PythonFiles.findLocation
+import addVote
+import findLocation
 
 #Setup for ultrasonic
 #GPIO Mode (BOARD / BCM)
